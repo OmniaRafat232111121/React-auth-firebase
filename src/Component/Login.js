@@ -1,6 +1,6 @@
 import { React, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link ,useLocation} from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {useNavigate} from 'react-router-dom'
 export default function Login() {
@@ -10,14 +10,16 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  async function handleSubmit(e) {
+  const location=useLocation();
+  const redirectPath = location.state?.path || "/";
+    async function handleSubmit(e) {
     e.preventDefault();
     try {
       setError("");
       await login(emailRef.current.value, passwordRef.current.value);
      
-       navigate("/");
-    } catch(error) {
+      navigate(redirectPath);
+     } catch(error) {
       setError("Failed to log in");
       //console.log(error)
     }

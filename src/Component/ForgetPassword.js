@@ -1,20 +1,50 @@
-import React from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
+import React ,{useState,useRef} from 'react'
+import { Button, Card, Form,Alert } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const ForgetPassword = () => {
+  const emailRef=useRef();
+
+  const { resetPassword } = useAuth();
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const handleSubmit=async(e)=>{
+    
+    e.preventDefault();
+    try{
+      await resetPassword(emailRef.current.value);
+      setMessage("Check your inbox for further instructions");
+      setError("");
+      setLoading(true);
+    }
+    catch(error){
+      setError('Failed To reset Password')
+      setLoading(true);
+
+    }
+    setLoading(false)
+  }
   return (
    <>
     <Card className='p-4'>
         <Card.Body>
         <h2 className="text-center mb-4">Reset Password</h2>
+        {error && <Alert variant="danger" >{error}</Alert>}
+        {message && <Alert variant='success'>{message}</Alert>}
         </Card.Body>
-        <Form>
+        <Form onSubmit={handleSubmit}>
             <Form.Group>
                 <Form.Label htmlFor='email'>Email:</Form.Label>
-                <Form.Control type="email" id="email"></Form.Control>
+                <Form.Control type="email" 
+                ref={emailRef}
+                id="email"></Form.Control>
             </Form.Group>
-            <Button variant='primary' type='submit' className=' text-center w-100 mt-3'>Reset Password</Button>
+            <Button variant='primary'
+             type='submit'
+             disabled={loading}
+             className=' text-center w-100 mt-3'>Reset Password</Button>
 
                     
         </Form>

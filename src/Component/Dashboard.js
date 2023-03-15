@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Card, Alert, Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import auth from "../features/firebase";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -12,9 +11,9 @@ export default function Dashboard() {
   async function handleLogout() {
     setError("");
     try {
-      await logout(auth);
+      await logout();
       navigate("/login");
-    } catch(error) {
+    } catch {
       setError("Failed to log out");
     }
   }
@@ -26,7 +25,7 @@ export default function Dashboard() {
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser && currentUser.email}
-          <Link to="/update" className="btn btn-primary w-100 mt-3">
+          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link>
         </Card.Body>
