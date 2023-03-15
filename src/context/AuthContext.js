@@ -5,6 +5,8 @@ import {
   sendPasswordResetEmail,
 
   signInWithEmailAndPassword,
+  updateEmail,
+  updatePassword,
   signOut
   
 } from "firebase/auth";
@@ -30,7 +32,12 @@ const AuthProvider = ({ children }) => {
    const resetPassword=(email)=>{
     return sendPasswordResetEmail(auth,email);
    }
- 
+   const updateUserEmail = (email) => {
+    return updateEmail(auth.currentUser, email);
+  };
+  const updateUserPassword = (password) => {
+    return updatePassword(auth.currentUser, password);
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -47,7 +54,9 @@ const AuthProvider = ({ children }) => {
         login,
         signup,
         logout,
-        resetPassword
+        resetPassword,
+        updateUserEmail,
+        updateUserPassword
        
       }}
     >

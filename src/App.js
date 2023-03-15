@@ -22,7 +22,7 @@ function App() {
         <Route path="/signup"  element={<SignUp/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/forgot" element={<ForgetPassword/>}/>
-        <Route path="/update" element={<UpdatePassword/>}/>
+        <Route path="/update-profile" element={<UpdatePassword/>}/>
 
         <Route path="/" element={
           <RequireAuth>

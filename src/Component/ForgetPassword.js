@@ -15,7 +15,7 @@ const ForgetPassword = () => {
     e.preventDefault();
     try{
       await resetPassword(emailRef.current.value);
-      setMessage("Check your inbox for further instructions");
+      setMessage("Check your inbox ");
       setError("");
       setLoading(true);
     }
